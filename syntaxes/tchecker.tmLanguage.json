@@ -6,10 +6,7 @@
 			"include": "#comments"
 		},
 		{
-			"patterns": [{
-				"name": "punctuation.separator.colon.tck",
-				"match": ":"
-			}]
+			"include": "#colons"
 		},
 		{
 			"include": "#declarations"
@@ -33,7 +30,11 @@
 				"name": "meta.attributes.tck",
 				"patterns": [
 					{
-						"match": "[a-zA-Z_0-9:\\s]+"
+						"match": "[a-zA-Z_0-9]+:",
+						"name": "entity.name.tag.attribute.tck"
+					},
+					{
+						"include": "#colons"
 					}
 				]
 			}]
@@ -81,6 +82,12 @@
 			"patterns": [{
 				"match": "@",
 				"name": "keyword.operator.at.tck"
+			}]
+		},
+		"colons": {
+			"patterns": [{
+				"name": "punctuation.separator.colon.tck",
+				"match": ":"
 			}]
 		}
 	}
