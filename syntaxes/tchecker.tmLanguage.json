@@ -1,0 +1,87 @@
+{
+	"scopeName": "source.tck",
+	"name": "TChecker",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"patterns": [{
+				"name": "punctuation.separator.colon.tck",
+				"match": ":"
+			}]
+		},
+		{
+			"include": "#declarations"
+		}
+	],
+	"repository": {
+		"attributes": {
+			"patterns": [{
+				"begin": "\\{",
+				"beginCaptures": {
+					"0": {
+						"name": "punctuation.section.attributes.begin.bracket.curly.tck"
+					}
+				},
+				"end": "\\}",
+				"endCaptures": {
+					"0": {
+						"name": "punctuation.section.attributes.end.bracket.curly.tck"
+					}
+				},
+				"name": "meta.attributes.tck",
+				"patterns": [
+					{
+						"match": "[a-zA-Z_0-9:\\s]+"
+					}
+				]
+			}]
+		},
+		"comments": {
+			"patterns": [{
+				"name": "comment.line.number-sign",
+				"begin": "#",
+				"end": "\n"
+			}]
+		},
+		"declarations": {
+			"patterns": [{
+				"begin": "^(clock|edge|event|int|location|process|sync|system)\\b",
+				"beginCaptures": {
+					"0": {
+						"name": "keyword.other.declaration.tck"
+					}
+				},
+				"end": "[\\n\\s]",
+				"endCaptures": {
+					"0": {
+						"name": "punctuation.definition.declaration.end.tck"
+					}
+				},
+				"name": "meta.declaration.tck",
+				"patterns": [
+					{
+						"match": "[a-zA-Z_0-9.]+",
+						"name": "variable.paramater.tck"
+					},
+					{
+						"include": "#attributes"
+					},
+					{
+						"include": "#at"
+					},
+					{
+						"include": "#comments"
+					}
+				]
+			}]
+		},
+		"at": {
+			"patterns": [{
+				"match": "@",
+				"name": "keyword.operator.at.tck"
+			}]
+		}
+	}
+}
