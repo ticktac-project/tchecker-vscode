@@ -1,18 +1,20 @@
+# Requirements
+
+- Visual Studio Code  (>= 1.78)
+
 # Installing TChecker-VSCode
 
-To load an extension, you need to clone the repositorie to your VS Code extensions folder ```.vscode/extensions```. Depending on your platform, it is located in the following folders:
+## Clone the repository:
 
-Linux
 ```
-~/.vscode/extensions
+git clone https://github.com/ticktac-project/tchecker-vscode.git
+```
+This will create a directory tchecker-vscode in the current directory, which will contain the entire extension.
+
+## Open VS Code and run in the Command Palette:
+
+```
+Developer: Install Extension from Location
 ```
 
-macOS
-```
-~/.vscode/extensions
-```
-
-Windows
-```
-%USERPROFILE%\.vscode\extensions
-```
+Then select the cloned repository.
