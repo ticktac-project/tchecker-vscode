@@ -6,10 +6,39 @@
 			"include": "#comments"
 		},
 		{
-			"include": "#colons"
-		},
-		{
-			"include": "#declarations"
+			"patterns": [{
+				"begin": "^(clock|edge|event|int|location|process|sync|system)\\b",
+				"beginCaptures": {
+					"0": {
+						"name": "keyword.other.declaration.tck"
+					}
+				},
+				"end": "[\\n\\s]",
+				"endCaptures": {
+					"0": {
+						"name": "punctuation.definition.declaration.end.tck"
+					}
+				},
+				"name": "meta.declaration.tck",
+				"patterns": [
+					{
+						"match": "[a-zA-Z_0-9.]+",
+						"name": "variable.paramater.tck"
+					},
+					{
+						"include": "#attributes"
+					},
+					{
+						"include": "#at"
+					},
+					{
+						"include": "#comments"
+					},
+					{
+						"include": "#colons"
+					}
+				]
+			}]
 		}
 	],
 	"repository": {
@@ -44,38 +73,6 @@
 				"name": "comment.line.number-sign",
 				"begin": "#",
 				"end": "\n"
-			}]
-		},
-		"declarations": {
-			"patterns": [{
-				"begin": "^(clock|edge|event|int|location|process|sync|system)\\b",
-				"beginCaptures": {
-					"0": {
-						"name": "keyword.other.declaration.tck"
-					}
-				},
-				"end": "[\\n\\s]",
-				"endCaptures": {
-					"0": {
-						"name": "punctuation.definition.declaration.end.tck"
-					}
-				},
-				"name": "meta.declaration.tck",
-				"patterns": [
-					{
-						"match": "[a-zA-Z_0-9.]+",
-						"name": "variable.paramater.tck"
-					},
-					{
-						"include": "#attributes"
-					},
-					{
-						"include": "#at"
-					},
-					{
-						"include": "#comments"
-					}
-				]
 			}]
 		},
 		"at": {
