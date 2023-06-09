@@ -1,0 +1,25 @@
+{
+	"name": "tchecker-vscode",
+	"displayName": "TChecker VSCode",
+	"description": "",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.78.0"
+	},
+	"categories": [
+		"Programming Languages"
+	],
+	"contributes": {
+		"languages": [{
+			"id": "tchecker",
+			"aliases": ["TChecker", "tchecker"],
+			"extensions": [".tck"],
+			"configuration": "./language-configuration.json"
+		}],
+		"grammars": [{
+			"language": "tchecker",
+			"scopeName": "source.tck",
+			"path": "./syntaxes/tchecker.tmLanguage.json"
+		}]
+	}
+}
