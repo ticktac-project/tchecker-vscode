@@ -1,8 +1,10 @@
 {
 	"name": "tchecker-vscode",
 	"displayName": "TChecker VSCode",
-	"description": "",
+	"description": "Visual Studio Code extension for TChecker",
 	"version": "0.0.1",
+	"publisher": "TickTac Project",
+	"icon": "logo.png",
 	"engines": {
 		"vscode": "^1.78.0"
 	},
