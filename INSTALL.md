@@ -40,6 +40,6 @@ Then select the cloned repository.
 ## Detail the TChecker path
 
 In order to use TChecker tools, it is essential to:
-- go in ```Settings```
+- go in VS Code ```Settings```
 - search for ```TChecker```
 - put the build path in the ```Path``` box
