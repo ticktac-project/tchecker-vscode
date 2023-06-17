@@ -1,5 +1,8 @@
 import * as vscode from 'vscode';
+
 import { handleTckSyntax } from './tools/tckSyntax'
+import { keywordsCompletion, eventNext } from './tools/autoCompletion';
+import { systemSignatureHelp } from './tools/signatureHelp';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Extension activated.');
@@ -9,5 +12,5 @@ export function activate(context: vscode.ExtensionContext) {
 	// handle tck-syntax tool
 	let tckSyntax = handleTckSyntax(diagnosticCollection);
 
-	context.subscriptions.push(tckSyntax);
+	context.subscriptions.push(tckSyntax, keywordsCompletion(), eventNext(), systemSignatureHelp());
 }
