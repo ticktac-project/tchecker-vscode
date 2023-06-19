@@ -4,7 +4,8 @@ export type Keyword = {
 	name: string,
 	signature: string,
 	documentation: string,
-	parameters: vscode.ParameterInformation[]
+	parameters: vscode.ParameterInformation[],
+	attributePos: number
 }
 
 export const keywords : Keyword[] = [
@@ -18,10 +19,11 @@ export const keywords : Keyword[] = [
 				documentation: 'System\'s identifier.'
 			},
 			{
-				label: '{attributes}',
+				label: 'attributes',
 				documentation: 'Optional.'
 			}
-		]
+		],
+		attributePos: 1
 	},
 	{
 		name: 'process',
@@ -33,10 +35,11 @@ export const keywords : Keyword[] = [
 				documentation: 'Process\'s identifier.'
 			},
 			{
-				label: '{attributes}',
+				label: 'attributes',
 				documentation: 'Optional.'
 			}
-		]
+		],
+		attributePos: 1
 	},
 	{
 		name: 'event',
@@ -48,10 +51,11 @@ export const keywords : Keyword[] = [
 				documentation: 'Event\'s identifier.'
 			},
 			{
-				label: '{attributes}',
+				label: 'attributes',
 				documentation: 'Optional.'
 			}
-		]
+		],
+		attributePos: 1
 	},
 	{
 		name: 'clock',
@@ -67,10 +71,11 @@ export const keywords : Keyword[] = [
 				documentation: 'System\'s identifier.'
 			},
 			{
-				label: '{attributes}',
+				label: 'attributes',
 				documentation: 'Optional.'
 			}
-		]
+		],
+		attributePos: 2
 	},
 	{
 		name: 'int',
@@ -98,10 +103,11 @@ export const keywords : Keyword[] = [
 				documentation: 'Int\'s identifier.'
 			},
 			{
-				label: '{attributes}',
+				label: 'attributes',
 				documentation: 'Optional.'
 			}
-		]
+		],
+		attributePos: 5
 	},
 	{
 		name: 'location',
@@ -117,10 +123,11 @@ export const keywords : Keyword[] = [
 				documentation: 'System\'s identifier.'
 			},
 			{
-				label: '{attributes}',
+				label: 'attributes',
 				documentation: 'Optional.'
 			}
-		]
+		],
+		attributePos: 2
 	},
 	{
 		name: 'edge',
@@ -144,10 +151,11 @@ export const keywords : Keyword[] = [
 				documentation: '...'
 			},
 			{
-				label: '{attributes}',
+				label: 'attributes',
 				documentation: 'Optional.'
 			}
-		]
+		],
+		attributePos: 4
 	},
 	{
 		name: 'sync',
@@ -159,9 +167,10 @@ export const keywords : Keyword[] = [
 				documentation: '...'
 			},
 			{
-				label: '{attributes}',
+				label: 'attributes',
 				documentation: 'Optional.'
 			}
-		]
+		],
+		attributePos: 1
 	}
 ]

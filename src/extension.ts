@@ -14,4 +14,5 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(tckSyntax, keywordsCompletion());
 	context.subscriptions.concat(systemSignatureHelp());
+	// context.subscriptions.push(retriggerTest());
 }
