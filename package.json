@@ -1,8 +1,10 @@
 {
 	"name": "tchecker-vscode",
 	"displayName": "TChecker VSCode",
-	"description": "",
+	"description": "Visual Studio Code extension for TChecker",
 	"version": "0.0.1",
+	"publisher": "TickTac Project",
+	"icon": "logo.png",
 	"engines": {
 		"vscode": "^1.78.0"
 	},
@@ -20,6 +22,37 @@
 			"language": "tchecker",
 			"scopeName": "source.tck",
 			"path": "./syntaxes/tchecker.tmLanguage.json"
-		}]
+		}],
+		"configuration": {
+			"title": "TChecker",
+			"properties": {
+				"tchecker-vscode.path": {
+				"type": "string",
+				"default": "",
+				"description": "Specifies the TChecker build path (./build)."
+			  }
+			}
+		  },
+		"commands": [
+			{
+				"command": "tchecker-vscode.tckSyntax",
+				"title": "TChecker: Syntax check (tck-syntax -c)"
+			}
+		]
+	},
+	"main": "./out/extension.js",
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"lint": "eslint \"src/**/*.ts\"",
+		"watch": "tsc -watch -p ./"
+	},
+	"devDependencies": {
+		"@types/node": "^16.18.34",
+		"@types/vscode": "^1.73.0",
+		"@typescript-eslint/eslint-plugin": "^5.42.0",
+		"@typescript-eslint/parser": "^5.42.0",
+		"eslint": "^8.26.0",
+		"typescript": "^5.1.3"
 	}
 }
