@@ -1,18 +1,44 @@
 import * as vscode from 'vscode';
 
+const keywords = [
+	{
+		'name': 'system',
+	},
+	{
+		'name': 'process',
+	},
+	{
+		'name': 'event',
+	},
+	{
+		'name': 'clock',
+	},
+	{
+		'name': 'int',
+	},
+	{
+		'name': 'location',
+	},
+	{
+		'name': 'edge',
+	},
+	{
+		'name': 'sync',
+	}
+]
+
 export function keywordsCompletion() {
 	return vscode.languages.registerCompletionItemProvider('tchecker', {
 
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
 			
-			const systemCompletion = new vscode.CompletionItem('system');
-			systemCompletion.kind = vscode.CompletionItemKind.Keyword;
+			function completeItem(item: string) {
+				const itemToComplete = new vscode.CompletionItem(item);
+				itemToComplete.kind = vscode.CompletionItemKind.Keyword;
+				return itemToComplete;
+			}
 			
-			// todo: others keyworkds
-
-			return [
-				systemCompletion,
-			];
+			return keywords.map((e) => completeItem(e.name));
 		}
 	});
 }
