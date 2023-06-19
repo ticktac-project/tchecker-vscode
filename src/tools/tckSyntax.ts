@@ -4,12 +4,9 @@ import { SpawnSyncReturns, spawnSync } from 'child_process';
 
 // gets the TChecker build path from config
 let tcheckerPath : string | undefined = vscode.workspace.getConfiguration('tchecker-vscode').get('path');
-// tcheckerPath = ((typeof tcheckerPath) === "string") ? tcheckerPath : "";
 
 // gets the TChecker command associated with syntax checking
 let tcheckerCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-syntax'));
-// let newTcheckerCommand : string = ((typeof tcheckerCommand) === "string") ? tcheckerCommand : "";
-
 
 export function handleTckSyntax(diagnosticCollection: vscode.DiagnosticCollection) {
 	return vscode.commands.registerCommand('tchecker-vscode.tckSyntax', () => {
