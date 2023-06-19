@@ -12,5 +12,6 @@ export function activate(context: vscode.ExtensionContext) {
 	// handle tck-syntax tool
 	let tckSyntax = handleTckSyntax(diagnosticCollection);
 
-	context.subscriptions.push(tckSyntax, keywordsCompletion(), systemSignatureHelp());
+	context.subscriptions.push(tckSyntax, keywordsCompletion());
+	context.subscriptions.concat(systemSignatureHelp());
 }

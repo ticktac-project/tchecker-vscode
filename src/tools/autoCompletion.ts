@@ -1,31 +1,6 @@
 import * as vscode from 'vscode';
 
-const keywords = [
-	{
-		'name': 'system',
-	},
-	{
-		'name': 'process',
-	},
-	{
-		'name': 'event',
-	},
-	{
-		'name': 'clock',
-	},
-	{
-		'name': 'int',
-	},
-	{
-		'name': 'location',
-	},
-	{
-		'name': 'edge',
-	},
-	{
-		'name': 'sync',
-	}
-]
+import { keywords } from '../constants';
 
 export function keywordsCompletion() {
 	return vscode.languages.registerCompletionItemProvider('tchecker', {
