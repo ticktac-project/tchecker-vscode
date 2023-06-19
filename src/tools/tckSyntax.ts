@@ -1,8 +1,15 @@
 import * as vscode from 'vscode';
 import { SpawnSyncReturns, spawnSync } from 'child_process';
 
-// Gets the TChecker build path
-let tcheckerPath = vscode.workspace.getConfiguration('tchecker-vscode').get('path');
+
+// gets the TChecker build path from config
+let tcheckerPath : string | undefined = vscode.workspace.getConfiguration('tchecker-vscode').get('path');
+// tcheckerPath = ((typeof tcheckerPath) === "string") ? tcheckerPath : "";
+
+// gets the TChecker command associated with syntax checking
+let tcheckerCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-syntax'));
+// let newTcheckerCommand : string = ((typeof tcheckerCommand) === "string") ? tcheckerCommand : "";
+
 
 export function handleTckSyntax(diagnosticCollection: vscode.DiagnosticCollection) {
 	return vscode.commands.registerCommand('tchecker-vscode.tckSyntax', () => {
@@ -14,15 +21,15 @@ export function handleTckSyntax(diagnosticCollection: vscode.DiagnosticCollectio
 
 		diagnosticCollection.clear();
 		
-		// perhaps reconsidering the path...
-		let output: SpawnSyncReturns<string> = spawnSync(tcheckerPath + "/src/tck-syntax -c " + currentFile, { shell: true, encoding: 'utf-8' });
+		let output: SpawnSyncReturns<string> = spawnSync(tcheckerPath as string + tcheckerCommand as string + " " + currentFile, { shell: true, encoding: 'utf-8' });
 
 		handleTckSyntaxOutput(output, diagnosticCollection, currentFile);
 	});
 }
 
 function handleTckSyntaxOutput(output: SpawnSyncReturns<string>, diagnosticCollection: vscode.DiagnosticCollection, currentFile: string) {
-	if (output.status === 1) { // error
+
+	if (output.status !== 0) { // error
 		vscode.window.showErrorMessage('An error has occurred. Please check the \'Problems\' panel for more details.');
 		// getting errors
 		const stderr = output.stderr.split('\n');
@@ -43,7 +50,7 @@ function handleTckSyntaxOutput(output: SpawnSyncReturns<string>, diagnosticColle
 			const warningOutput = output.stderr.split('\n');
 			let i = 0;
 			let warnings = [];
-			const pos = new vscode.Position(0,0); // can't get the pos of the warning
+			const pos = new vscode.Position(0,0); // to do: replace by actual position (waiting for a tck-syntax feature)
 			while (i < warningOutput.length - 1) {
 				const range = new vscode.Range(pos, pos);
 				warnings.push(new vscode.Diagnostic(range, warningOutput[i], 1));

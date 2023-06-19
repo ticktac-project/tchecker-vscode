@@ -27,16 +27,21 @@
 			"title": "TChecker",
 			"properties": {
 				"tchecker-vscode.path": {
-				"type": "string",
-				"default": "",
-				"description": "Specifies the TChecker build path (./build)."
-			  }
+					"type": "string",
+					"default": "",
+					"description": "Specifies the TChecker path (/build/src/)."
+				},
+				"tchecker-vscode.tck-syntax": {
+					"type": "string",
+					"default": "tck-syntax -c",
+					"description": "Specifies the command for performing syntax checking."
+				}
 			}
-		  },
+		},
 		"commands": [
 			{
 				"command": "tchecker-vscode.tckSyntax",
-				"title": "TChecker: Syntax check (tck-syntax -c)"
+				"title": "TChecker: Syntax check"
 			}
 		]
 	},
