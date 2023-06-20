@@ -20,7 +20,7 @@ export const keywords : Keyword[] = [
 			},
 			{
 				label: 'attributes',
-				documentation: 'Optional.'
+				documentation: 'The {attributes} part of the declaration can be ommitted if no attribute is associated to the system (or it can be left empty: {}).'
 			}
 		],
 		attributePos: 1
@@ -28,7 +28,7 @@ export const keywords : Keyword[] = [
 	{
 		name: 'process',
 		signature: 'process:id{attributes}',
-		documentation: 'Declares a process with identifier id and given attributes. No other process shall have the same identifier.',
+		documentation: 'Declares a process with identifier id and given attributes. No other process shall have the same identifier.\n\nA process declaration declares a process name. It does not declare a new scope. Hence all declarations following the process declaration are in the global scope.\n\nThere is no way to declare a type of process, and instantiate it in TChecker. In order to specify several instances of the same process type, the process declaration and all the related declarations (locations, edges, etc) shall be duplicated. This can be solved by writing a script that generates the TChecker model and that handles process instantiation smoothly.',
 		parameters: [
 			{
 				label: 'id',
@@ -36,7 +36,7 @@ export const keywords : Keyword[] = [
 			},
 			{
 				label: 'attributes',
-				documentation: 'Optional.'
+				documentation: 'The {attributes} part of the declaration can be ommitted if no attribute is associated to the system (or it can be left empty: {}).'
 			}
 		],
 		attributePos: 1
@@ -52,7 +52,7 @@ export const keywords : Keyword[] = [
 			},
 			{
 				label: 'attributes',
-				documentation: 'Optional.'
+				documentation: 'The {attributes} part of the declaration can be ommitted if no attribute is associated to the system (or it can be left empty: {}).'
 			}
 		],
 		attributePos: 1
@@ -64,15 +64,15 @@ export const keywords : Keyword[] = [
 		parameters: [
 			{
 				label: 'size',
-				documentation: '...'
+				documentation: 'Size of the array.'
 			},
 			{
 				label: 'id',
-				documentation: 'System\'s identifier.'
+				documentation: 'Clock\'s identifier.'
 			},
 			{
 				label: 'attributes',
-				documentation: 'Optional.'
+				documentation: 'The {attributes} part of the declaration can be ommitted if no attribute is associated to the system (or it can be left empty: {}).'
 			}
 		],
 		attributePos: 2
@@ -84,27 +84,27 @@ export const keywords : Keyword[] = [
 		parameters: [
 			{
 				label: 'size',
-				documentation: '...'
+				documentation: 'Size of the array.'
 			},
 			{
 				label: 'min',
-				documentation: '...'
+				documentation: 'Minimum value of the array.'
 			},
 			{
 				label: 'max',
-				documentation: '...'
+				documentation: 'Maximum value of the array.'
 			},
 			{
 				label: 'init',
-				documentation: '...'
+				documentation: 'Initial value of the array.'
 			},
 			{
 				label: 'id',
-				documentation: 'Int\'s identifier.'
+				documentation: 'Array\'s identifier.'
 			},
 			{
 				label: 'attributes',
-				documentation: 'Optional.'
+				documentation: 'The {attributes} part of the declaration can be ommitted if no attribute is associated to the system (or it can be left empty: {}).'
 			}
 		],
 		attributePos: 5
@@ -116,15 +116,15 @@ export const keywords : Keyword[] = [
 		parameters: [
 			{
 				label: 'p',
-				documentation: '...'
+				documentation: 'Process\' identifier.'
 			},
 			{
 				label: 'id',
-				documentation: 'System\'s identifier.'
+				documentation: 'Location\'s identifier.'
 			},
 			{
 				label: 'attributes',
-				documentation: 'Optional.'
+				documentation: 'The {attributes} part of the declaration can be ommitted if no attribute is associated to the system (or it can be left empty: {}).'
 			}
 		],
 		attributePos: 2
@@ -136,23 +136,23 @@ export const keywords : Keyword[] = [
 		parameters: [
 			{
 				label: 'p',
-				documentation: '...'
+				documentation: 'Process\'s identifier.'
 			},
 			{
 				label: 'source',
-				documentation: '...'
+				documentation: 'Source location.'
 			},
 			{
 				label: 'target',
-				documentation: '...'
+				documentation: 'Target location.'
 			},
 			{
 				label: 'e',
-				documentation: '...'
+				documentation: 'Labelled event.'
 			},
 			{
 				label: 'attributes',
-				documentation: 'Optional.'
+				documentation: 'The {attributes} part of the declaration can be ommitted if no attribute is associated to the system (or it can be left empty: {}).'
 			}
 		],
 		attributePos: 4
@@ -164,11 +164,11 @@ export const keywords : Keyword[] = [
 		parameters: [
 			{
 				label: 'sync_constraints',
-				documentation: '...'
+				documentation: 'Synchronisation constraints.'
 			},
 			{
 				label: 'attributes',
-				documentation: 'Optional.'
+				documentation: 'The {attributes} part of the declaration can be ommitted if no attribute is associated to the system (or it can be left empty: {}).'
 			}
 		],
 		attributePos: 1
