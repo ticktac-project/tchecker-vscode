@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import { handleTckSyntax } from './tools/tckSyntax'
 import { keywordsCompletion } from './tools/autoCompletion';
 import { systemSignatureHelp } from './tools/signatureHelp';
+import { handleHover } from './tools/hover';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Extension activated.');
@@ -14,5 +15,5 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(tckSyntax, keywordsCompletion());
 	context.subscriptions.concat(systemSignatureHelp());
-	// context.subscriptions.push(retriggerTest());
+	context.subscriptions.concat(handleHover());
 }
