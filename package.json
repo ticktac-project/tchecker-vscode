@@ -12,17 +12,26 @@
 		"Programming Languages"
 	],
 	"contributes": {
-		"languages": [{
-			"id": "tchecker",
-			"aliases": ["TChecker", "tchecker"],
-			"extensions": [".tck"],
-			"configuration": "./language-configuration.json"
-		}],
-		"grammars": [{
-			"language": "tchecker",
-			"scopeName": "source.tck",
-			"path": "./syntaxes/tchecker.tmLanguage.json"
-		}],
+		"languages": [
+			{
+				"id": "tchecker",
+				"aliases": [
+					"TChecker",
+					"tchecker"
+				],
+				"extensions": [
+					".tck"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "tchecker",
+				"scopeName": "source.tck",
+				"path": "./syntaxes/tchecker.tmLanguage.json"
+			}
+		],
 		"configuration": {
 			"title": "TChecker",
 			"properties": {
