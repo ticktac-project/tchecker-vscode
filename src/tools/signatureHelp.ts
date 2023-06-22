@@ -5,12 +5,12 @@ import { countCar } from '../utils';
 
 function triggerSignatureHelp(keyword: Keyword) {
 	return vscode.languages.registerSignatureHelpProvider('tchecker', {
-		provideSignatureHelp(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.SignatureHelpContext) {
+		provideSignatureHelp(document: vscode.TextDocument, position: vscode.Position) {
 
 			const linePrefix = document.lineAt(position).text.substring(0, position.character);
 
-			let nbOfColon = countCar(linePrefix,':');
-			let nbOfOpenBracket = countCar(linePrefix,'{');
+			const nbOfColon = countCar(linePrefix,':');
+			const nbOfOpenBracket = countCar(linePrefix,'{');
 
 			if (!linePrefix.startsWith(keyword.name + ':') || (nbOfColon > keyword.attributePos) || (nbOfOpenBracket > 1) || (nbOfOpenBracket == 1 && nbOfColon < keyword.attributePos)) {
 				return undefined;

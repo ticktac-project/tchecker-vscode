@@ -12,10 +12,10 @@ function completeItem(item: string) {
 
 function handleKeywords() {
 	return vscode.languages.registerCompletionItemProvider('tchecker', {
-		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
-			let line = document.lineAt(position).text.substring(0, position.character);
-			let nbOfColon = countCar(line,':');
-			let nbOfOpenBracket = countCar(line,'{');
+		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+			const line = document.lineAt(position).text.substring(0, position.character);
+			const nbOfColon = countCar(line,':');
+			const nbOfOpenBracket = countCar(line,'{');
 
 			if (nbOfColon > 0 || nbOfOpenBracket > 0) {
 				return undefined;
@@ -27,9 +27,9 @@ function handleKeywords() {
 }
 
 function handleAutoCompletionWithConstraint(document: vscode.TextDocument, position: vscode.Position, keyword: string, variables: string[], startingColon: number, isRetriggerable: boolean) {
-	let line = document.lineAt(position).text.substring(0, position.character);
-	let nbOfColon = countCar(line,':');
-	let nbOfOpenBracket = countCar(line,'{');
+	const line = document.lineAt(position).text.substring(0, position.character);
+	const nbOfColon = countCar(line,':');
+	const nbOfOpenBracket = countCar(line,'{');
 	const retriggerOption = ((isRetriggerable) ? (nbOfColon === 0) : (nbOfColon !== startingColon));
 	if (!line.startsWith(keyword + ':') || nbOfOpenBracket !== 0 || retriggerOption) {
 		return undefined;
@@ -40,7 +40,7 @@ function handleAutoCompletionWithConstraint(document: vscode.TextDocument, posit
 
 function handleLocation() {
 	return vscode.languages.registerCompletionItemProvider('tchecker', {
-		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
+		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 			const processId = getVarAbove(document, 'process', 1);
 			return handleAutoCompletionWithConstraint(document, position, 'location', processId, 1, false);
 		}
@@ -50,7 +50,7 @@ function handleLocation() {
 function handleEdge() {
 	const handleEdgeProcess = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
-			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
+			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				const processId = getVarAbove(document, 'process', 1);
 				return handleAutoCompletionWithConstraint(document, position, 'edge', processId, 1, false);
 			}
@@ -58,7 +58,7 @@ function handleEdge() {
 	};
 	const handleEdgeSource = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
-			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
+			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				const locationId = getVarAbove(document, 'location', 2);
 				return handleAutoCompletionWithConstraint(document, position, 'edge', locationId, 2, false);
 			}
@@ -66,7 +66,7 @@ function handleEdge() {
 	};
 	const handleEdgeLocationTarget = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
-			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
+			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				const locationId = getVarAbove(document, 'location', 2);
 				return handleAutoCompletionWithConstraint(document, position, 'edge', locationId, 3, false);
 			}
@@ -74,7 +74,7 @@ function handleEdge() {
 	};
 	const handleEdgeEvent = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
-			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
+			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				const eventId = getVarAbove(document, 'event', 1);
 				return handleAutoCompletionWithConstraint(document, position, 'edge', eventId, 4, false);
 			}
@@ -87,7 +87,7 @@ function handleEdge() {
 function handleSync() {
 	const handleSyncProcess = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
-			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
+			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				const processId = getVarAbove(document, 'process', 1);
 				return handleAutoCompletionWithConstraint(document, position, 'sync', processId, 1, true);
 			}
@@ -95,7 +95,7 @@ function handleSync() {
 	};
 	const handleSyncEvent = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
-			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
+			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				const eventId = getVarAbove(document, 'event', 1);
 				return handleAutoCompletionWithConstraint(document, position, 'sync', eventId, 1, true);
 			}

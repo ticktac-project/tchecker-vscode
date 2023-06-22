@@ -4,7 +4,7 @@ import { Keyword, keywords } from '../constants';
 
 export function triggerHover(keyword: Keyword) {
 	return vscode.languages.registerHoverProvider('tchecker', {
-		provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken) {
+		provideHover(document: vscode.TextDocument, position: vscode.Position) {
 
 			const linePrefix = document.lineAt(position).text;
 
