@@ -30,9 +30,11 @@ function handleAutoCompletionWithConstraint(document: vscode.TextDocument, posit
 	let line = document.lineAt(position).text.substring(0, position.character);
 	let nbOfColon = countCar(line,':');
 	let nbOfOpenBracket = countCar(line,'{');
-	if (!line.startsWith(keyword + ':') || (isRetriggerable) ? (nbOfColon === 0) : (nbOfColon !== startingColon) || nbOfOpenBracket !== 0) {
+	const retriggerOption = ((isRetriggerable) ? (nbOfColon === 0) : (nbOfColon !== startingColon));
+	if (!line.startsWith(keyword + ':') || nbOfOpenBracket !== 0 || retriggerOption) {
 		return undefined;
 	}
+
 	return variables.map((e) => completeItem(e));
 }
 
@@ -104,5 +106,5 @@ function handleSync() {
 }
 
 export function handleAutoCompletion() {
-	return vscode.Disposable.from(handleKeywords(), handleLocation(), handleEdge(), handleSync(), );
+	return vscode.Disposable.from(handleKeywords(), handleLocation(), handleEdge(), handleSync());
 }

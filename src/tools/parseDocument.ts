@@ -13,7 +13,6 @@ export function getVarAbove(document: vscode.TextDocument, keyword: string, inde
 		if (line.startsWith(keyword + '')) {
 			let varValue = line.split(':');
 			res.push((varValue[index]).split('{')[0]);
-			console.log(varValue);
 		}
 		i++;
 	}
