@@ -1,58 +1,30 @@
 import * as vscode from 'vscode';
 import { SpawnSyncReturns, spawnSync } from 'child_process';
 
-// gets the TChecker build path from config
-const tcheckerPath : string | undefined = vscode.workspace.getConfiguration('tchecker-vscode').get('path');
+import { handleTckTool } from './tckCommon';
 
-// gets the TChecker command associated with syntax checking
-const tcheckerCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-syntax'));
+// gets tck-syntax tool from config
+const tckCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-syntax'));
 
 export function handleTckSyntax(diagnosticCollection: vscode.DiagnosticCollection) {
-	return vscode.commands.registerCommand('tchecker-vscode.tckSyntax', () => {
-		
-		let currentFile = vscode.window.activeTextEditor?.document.fileName;
-		if (currentFile === undefined) {
-			currentFile = "";
-		}
-
-		diagnosticCollection.clear();
-		
-		const output: SpawnSyncReturns<string> = spawnSync(tcheckerPath as string + tcheckerCommand as string + " " + currentFile, { shell: true, encoding: 'utf-8' });
-
-		handleTckSyntaxOutput(output, diagnosticCollection, currentFile);
-	});
+	return handleTckTool('tchecker-vscode.tckSyntax', tckCommand as string, diagnosticCollection, handleTckSyntaxWarnings);
 }
 
-function handleTckSyntaxOutput(output: SpawnSyncReturns<string>, diagnosticCollection: vscode.DiagnosticCollection, currentFile: string) {
-
-	if (output.status !== 0) { // error
-		vscode.window.showErrorMessage('An error has occurred. Please check the \'Problems\' panel for more details.');
-		// getting errors
-		const stderr = output.stderr.split('\n');
+// todo: to do: replace by actual position
+function handleTckSyntaxWarnings(output: SpawnSyncReturns<string>, diagnosticCollection: vscode.DiagnosticCollection, currentFile: string) {
+	if (output.stderr !== '') {
+		vscode.window.showInformationMessage('Syntax OK. Warning(s) detected, please check the \'Problems\' panel for more details.');
+		const warningOutput = output.stderr.split('\n');
 		let i = 0;
-		const errors = [];
-		while (i < stderr.length - 1) {
-			const [line, col] = stderr[i].split(' ')[1].split('.');
-			const pos = new vscode.Position(parseInt(line)-1, parseInt(col)-1);
+		const warnings = [];
+		const pos = new vscode.Position(0,0);
+		while (i < warningOutput.length - 1) {
 			const range = new vscode.Range(pos, pos);
-			errors.push(new vscode.Diagnostic(range, stderr[i]));
+			warnings.push(new vscode.Diagnostic(range, warningOutput[i], 1));
 			i++;
 		}
-		diagnosticCollection.set(vscode.Uri.parse(currentFile), errors);
+		diagnosticCollection.set(vscode.Uri.parse(currentFile), warnings);
 	} else {
 		vscode.window.showInformationMessage('Syntax OK.');
-
-		if (output.stderr !== '') { // warning
-			const warningOutput = output.stderr.split('\n');
-			let i = 0;
-			const warnings = [];
-			const pos = new vscode.Position(0,0); // to do: replace by actual position (waiting for a tck-syntax feature)
-			while (i < warningOutput.length - 1) {
-				const range = new vscode.Range(pos, pos);
-				warnings.push(new vscode.Diagnostic(range, warningOutput[i], 1));
-				i++;
-			}
-			diagnosticCollection.set(vscode.Uri.parse(currentFile), warnings);
-		}
 	}
 }

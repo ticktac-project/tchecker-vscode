@@ -8,6 +8,9 @@ export type Keyword = {
 	attributePos: number
 }
 
+// gets the TChecker build path from config
+export const tckPath : string | undefined = vscode.workspace.getConfiguration('tchecker-vscode').get('path');
+
 export const keywords : Keyword[] = [
 	{
 		name: 'system',
