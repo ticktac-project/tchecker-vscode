@@ -11,13 +11,18 @@ export function handleTckSyntax(diagnosticCollection: vscode.DiagnosticCollectio
 	return handleTckTool('tchecker-vscode.tckSyntax', tckCommand as string, diagnosticCollection, handleTckSyntaxWarnings);
 }
 
-// todo: to do: replace by actual position
 function handleTckSyntaxWarnings(output: SpawnSyncReturns<string>, diagnosticCollection: vscode.DiagnosticCollection, currentFile: string) {
-	if (output.stderr !== '') {
-		vscode.window.showInformationMessage('Syntax OK. Warning(s) detected, please check the \'Problems\' panel for more details.');
-		const warnings = parseErrorPosition(output);
-		diagnosticCollection.set(vscode.Uri.parse(currentFile), warnings);
-	} else {
-		vscode.window.showInformationMessage('Syntax OK.');
+	if (output.status === 0) {
+		if (output.stderr !== '') {
+			vscode.window.showInformationMessage('Syntax OK. Warning(s) detected, please check the \'Problems\' panel for more details.');
+
+			// getting warnings
+			const warnings = parseErrorPosition(output, 1);
+
+			// sending warnings to VSCode
+			diagnosticCollection.set(vscode.Uri.parse(currentFile), warnings);
+		} else {
+			vscode.window.showInformationMessage('Syntax OK.');
+		}
 	}
 }

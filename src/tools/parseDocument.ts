@@ -20,7 +20,7 @@ export function getVarAbove(document: vscode.TextDocument, keyword: string, inde
 	return res;
 }
 
-export function parseErrorPosition(output: SpawnSyncReturns<string>) {
+export function parseErrorPosition(output: SpawnSyncReturns<string>, severity: vscode.DiagnosticSeverity) {
 	const regex = /[0-9]+-*[0-9]*.[0-9]+-*[0-9]*/;
 	const stderr = output.stderr.split('\n');
 	const errors = [];
@@ -37,7 +37,7 @@ export function parseErrorPosition(output: SpawnSyncReturns<string>) {
 			const posEnd = new vscode.Position(((lineEnd !== undefined) ? (parseInt(lineEnd) - 1) : (parseInt(lineBegin) - 1)), ((colEnd !== undefined) ? (parseInt(colEnd)) : (parseInt(colBegin) - 1)));
 
 			const range = new vscode.Range(posBegin, posEnd);
-			errors.push(new vscode.Diagnostic(range, stderr[i]));
+			errors.push(new vscode.Diagnostic(range, stderr[i], severity));
 		}
 		i++;
 	}

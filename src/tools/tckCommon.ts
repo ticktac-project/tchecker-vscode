@@ -30,7 +30,7 @@ function handleErrorsOutput(output: SpawnSyncReturns<string>, diagnosticCollecti
 		vscode.window.showErrorMessage('An error has occurred. Please check the \'Problems\' panel for more details.');
 		
 		// getting errors
-		const errors = parseErrorPosition(output);
+		const errors = parseErrorPosition(output, 0);
 
 		// sending errors to VSCode
 		diagnosticCollection.set(vscode.Uri.parse(currentFile), errors);
