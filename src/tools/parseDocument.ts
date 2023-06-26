@@ -1,3 +1,4 @@
+import { SpawnSyncReturns } from 'child_process';
 import * as vscode from 'vscode';
 
 export function getVarAbove(document: vscode.TextDocument, keyword: string, index: number) {
@@ -17,4 +18,29 @@ export function getVarAbove(document: vscode.TextDocument, keyword: string, inde
 		i++;
 	}
 	return res;
+}
+
+export function parseErrorPosition(output: SpawnSyncReturns<string>) {
+	const regex = /[0-9]+-*[0-9]*.[0-9]+-*[0-9]*/;
+	const stderr = output.stderr.split('\n');
+	const errors = [];
+	let i = 0;
+
+	while (i < stderr.length - 1) {
+		const errorPosition = stderr[i].match(regex);
+		if (errorPosition !== null) {
+			const [line, col] = errorPosition[0].split('.');
+			const [lineBegin, lineEnd] = line.split('-');
+			const [colBegin, colEnd] = col.split('-');
+
+			const posBegin = new vscode.Position(parseInt(lineBegin) - 1, parseInt(colBegin) - 1);
+			const posEnd = new vscode.Position(((lineEnd !== undefined) ? (parseInt(lineEnd) - 1) : (parseInt(lineBegin) - 1)), ((colEnd !== undefined) ? (parseInt(colEnd)) : (parseInt(colBegin) - 1)));
+
+			const range = new vscode.Range(posBegin, posEnd);
+			errors.push(new vscode.Diagnostic(range, stderr[i]));
+		}
+		i++;
+	}
+
+	return errors;
 }
