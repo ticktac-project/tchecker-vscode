@@ -41,7 +41,7 @@ function handleAutoCompletionWithConstraint(document: vscode.TextDocument, posit
 function handleLocation() {
 	return vscode.languages.registerCompletionItemProvider('tchecker', {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-			const processId = getVarAbove(document, 'process', 1);
+			const processId = getVarAbove(document, 'process', 1, '');
 			return handleAutoCompletionWithConstraint(document, position, 'location', processId, 1, false);
 		}
 	}, ':');
@@ -51,7 +51,7 @@ function handleEdge() {
 	const handleEdgeProcess = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-				const processId = getVarAbove(document, 'process', 1);
+				const processId = getVarAbove(document, 'process', 1, '');
 				return handleAutoCompletionWithConstraint(document, position, 'edge', processId, 1, false);
 			}
 		}, ':');
@@ -59,7 +59,10 @@ function handleEdge() {
 	const handleEdgeSource = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-				const locationId = getVarAbove(document, 'location', 2);
+				const line = document.lineAt(position).text;
+				const targettedProcess = line.split(':')[1];
+				const locationId = getVarAbove(document, 'location', 2, targettedProcess);
+				
 				return handleAutoCompletionWithConstraint(document, position, 'edge', locationId, 2, false);
 			}
 		}, ':');
@@ -67,7 +70,10 @@ function handleEdge() {
 	const handleEdgeLocationTarget = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-				const locationId = getVarAbove(document, 'location', 2);
+				const line = document.lineAt(position).text;
+				const targettedProcess = line.split(':')[1];
+				const locationId = getVarAbove(document, 'location', 2, targettedProcess);
+
 				return handleAutoCompletionWithConstraint(document, position, 'edge', locationId, 3, false);
 			}
 		}, ':');
@@ -75,7 +81,7 @@ function handleEdge() {
 	const handleEdgeEvent = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-				const eventId = getVarAbove(document, 'event', 1);
+				const eventId = getVarAbove(document, 'event', 1, '');
 				return handleAutoCompletionWithConstraint(document, position, 'edge', eventId, 4, false);
 			}
 		}, ':');
@@ -88,7 +94,7 @@ function handleSync() {
 	const handleSyncProcess = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-				const processId = getVarAbove(document, 'process', 1);
+				const processId = getVarAbove(document, 'process', 1, '');
 				return handleAutoCompletionWithConstraint(document, position, 'sync', processId, 1, true);
 			}
 		}, ':');
@@ -96,7 +102,7 @@ function handleSync() {
 	const handleSyncEvent = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-				const eventId = getVarAbove(document, 'event', 1);
+				const eventId = getVarAbove(document, 'event', 1, '');
 				return handleAutoCompletionWithConstraint(document, position, 'sync', eventId, 1, true);
 			}
 		}, '@');

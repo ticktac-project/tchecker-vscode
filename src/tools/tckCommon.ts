@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { SpawnSyncReturns, spawnSync } from 'child_process';
 
 import { tckPath } from '../constants';
+import { parseErrorPosition } from './parseDocument';
 
 export function handleTckTool(id: string, command: string, diagnosticCollection: vscode.DiagnosticCollection, tool: any) {
 	return vscode.commands.registerCommand(id, () => {
@@ -27,18 +28,11 @@ function handleErrorsOutput(output: SpawnSyncReturns<string>, diagnosticCollecti
 
 	if (output.status !== 0) {
 		vscode.window.showErrorMessage('An error has occurred. Please check the \'Problems\' panel for more details.');
+		
 		// getting errors
-		const stderr = output.stderr.split('\n');
-		let i = 0;
-		// todo: reparse errors
-		const errors = [];
-		while (i < stderr.length - 1) {
-			const [line, col] = stderr[i].split(' ')[1].split('.');
-			const pos = new vscode.Position(parseInt(line)-1, parseInt(col)-1);
-			const range = new vscode.Range(pos, pos);
-			errors.push(new vscode.Diagnostic(range, stderr[i]));
-			i++;
-		}
+		const errors = parseErrorPosition(output, 0);
+
+		// sending errors to VSCode
 		diagnosticCollection.set(vscode.Uri.parse(currentFile), errors);
 	}
 }
