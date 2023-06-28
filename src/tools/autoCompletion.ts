@@ -111,8 +111,10 @@ function handleSync() {
 				const nbOfColon = countCar(line,':');
 				const nbOfAt = countCar(line,'@');
 				const atNeqColon = (nbOfColon !== nbOfAt);
-								
-				const eventId = getVarAbove(document, 'event', 1, '');
+
+				const targettedProcess = line.split(':')[nbOfColon].split('@')[0];
+
+				const eventId = getVarAbove(document, 'edge', 4, targettedProcess);
 				return handleAutoCompletionWithConstraint(document, position, 'sync', eventId, 1, true, atNeqColon);
 			}
 		}, '@');

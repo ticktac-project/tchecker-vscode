@@ -7,19 +7,19 @@ export function getVarAbove(document: vscode.TextDocument, keyword: string, inde
 	let i = 0;
 	// in order to get defined variables, we consider the current line as the last line for the document analysis
 	const lastLine : number =  vscode.window.activeTextEditor?.selection.active.line as number;
-	const res = [];
+	const res : string[] = [];
 	while (i < lastLine) {
 		pos = new vscode.Position(i, 0);
 		line = document.lineAt(pos).text;
 		if (line.startsWith(keyword + '')) {
+			const value = (line.split(':')[index]).split('{')[0];
 			if (constraint != '') {
 				if (line.match(constraint)) {
-					const varValue = line.split(':');
-					res.push((varValue[index]).split('{')[0]);
+					if (!res.includes(value))
+						res.push(value);
 				}
 			} else {
-				const varValue = line.split(':');
-				res.push((varValue[index]).split('{')[0]);
+				res.push(value);
 			}
 		}
 		i++;
@@ -29,7 +29,6 @@ export function getVarAbove(document: vscode.TextDocument, keyword: string, inde
 
 export function parseErrorPosition(output: SpawnSyncReturns<string>, severity: vscode.DiagnosticSeverity) {
 	const regex = /[0-9]+-*[0-9]*\b.\b[0-9]+-*[0-9]*/;
-	const pathError = /No such file or directory/;
 	const stderr = output.stderr.split('\n');
 	const errors = [];
 	let i = 0;
