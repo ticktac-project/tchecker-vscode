@@ -26,12 +26,12 @@ function handleKeywords() {
 	});
 }
 
-function handleAutoCompletionWithConstraint(document: vscode.TextDocument, position: vscode.Position, keyword: string, variables: string[], startingColon: number, isRetriggerable: boolean) {
+function handleAutoCompletionWithConstraint(document: vscode.TextDocument, position: vscode.Position, keyword: string, variables: string[], startingColon: number, isRetriggerable: boolean, others: boolean) {
 	const line = document.lineAt(position).text.substring(0, position.character);
 	const nbOfColon = countCar(line,':');
 	const nbOfOpenBracket = countCar(line,'{');
 	const retriggerOption = ((isRetriggerable) ? (nbOfColon === 0) : (nbOfColon !== startingColon));
-	if (!line.startsWith(keyword + ':') || nbOfOpenBracket !== 0 || retriggerOption) {
+	if (!line.startsWith(keyword + ':') || nbOfOpenBracket !== 0 || retriggerOption || others) {
 		return undefined;
 	}
 
@@ -42,7 +42,7 @@ function handleLocation() {
 	return vscode.languages.registerCompletionItemProvider('tchecker', {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 			const processId = getVarAbove(document, 'process', 1, '');
-			return handleAutoCompletionWithConstraint(document, position, 'location', processId, 1, false);
+			return handleAutoCompletionWithConstraint(document, position, 'location', processId, 1, false, false);
 		}
 	}, ':');
 }
@@ -52,7 +52,7 @@ function handleEdge() {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				const processId = getVarAbove(document, 'process', 1, '');
-				return handleAutoCompletionWithConstraint(document, position, 'edge', processId, 1, false);
+				return handleAutoCompletionWithConstraint(document, position, 'edge', processId, 1, false, false);
 			}
 		}, ':');
 	};
@@ -63,7 +63,7 @@ function handleEdge() {
 				const targettedProcess = line.split(':')[1];
 				const locationId = getVarAbove(document, 'location', 2, targettedProcess);
 				
-				return handleAutoCompletionWithConstraint(document, position, 'edge', locationId, 2, false);
+				return handleAutoCompletionWithConstraint(document, position, 'edge', locationId, 2, false, false);
 			}
 		}, ':');
 	};
@@ -74,7 +74,7 @@ function handleEdge() {
 				const targettedProcess = line.split(':')[1];
 				const locationId = getVarAbove(document, 'location', 2, targettedProcess);
 
-				return handleAutoCompletionWithConstraint(document, position, 'edge', locationId, 3, false);
+				return handleAutoCompletionWithConstraint(document, position, 'edge', locationId, 3, false, false);
 			}
 		}, ':');
 	};
@@ -82,7 +82,7 @@ function handleEdge() {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				const eventId = getVarAbove(document, 'event', 1, '');
-				return handleAutoCompletionWithConstraint(document, position, 'edge', eventId, 4, false);
+				return handleAutoCompletionWithConstraint(document, position, 'edge', eventId, 4, false, false);
 			}
 		}, ':');
 	};
@@ -94,16 +94,26 @@ function handleSync() {
 	const handleSyncProcess = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+				const line = document.lineAt(position).text;
+				const nbOfColon = countCar(line,':');
+				const nbOfAt = countCar(line,'@');
+				const atNeqColon = (nbOfColon !== nbOfAt + 1);
+				
 				const processId = getVarAbove(document, 'process', 1, '');
-				return handleAutoCompletionWithConstraint(document, position, 'sync', processId, 1, true);
+				return handleAutoCompletionWithConstraint(document, position, 'sync', processId, 1, true, atNeqColon);
 			}
 		}, ':');
 	};
 	const handleSyncEvent = () => {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+				const line = document.lineAt(position).text;
+				const nbOfColon = countCar(line,':');
+				const nbOfAt = countCar(line,'@');
+				const atNeqColon = (nbOfColon !== nbOfAt);
+								
 				const eventId = getVarAbove(document, 'event', 1, '');
-				return handleAutoCompletionWithConstraint(document, position, 'sync', eventId, 1, true);
+				return handleAutoCompletionWithConstraint(document, position, 'sync', eventId, 1, true, atNeqColon);
 			}
 		}, '@');
 	};
