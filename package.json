@@ -38,12 +38,17 @@
 				"tchecker-vscode.path": {
 					"type": "string",
 					"default": "",
-					"description": "Specifies the TChecker path (/build/src/)."
+					"description": "Specifies the path to TChecker binaries."
 				},
 				"tchecker-vscode.tck-syntax": {
 					"type": "string",
 					"default": "tck-syntax -c",
 					"description": "Specifies the command for performing syntax checking."
+				},
+				"tchecker-vscode.tck-simulate": {
+					"type": "string",
+					"default": "tck-simulate -i",
+					"description": "Specifies the command for using tck-simulate tool."
 				}
 			}
 		},
@@ -51,6 +56,10 @@
 			{
 				"command": "tchecker-vscode.tckSyntax",
 				"title": "TChecker: Syntax check"
+			},
+			{
+				"command": "tchecker-vscode.tckSimulate",
+				"title": "TChecker: tck-simulate"
 			}
 		]
 	},

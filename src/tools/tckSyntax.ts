@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { SpawnSyncReturns, spawnSync } from 'child_process';
+import { SpawnSyncReturns } from 'child_process';
 
 import { handleTckTool } from './tckCommon';
 import { parseErrorPosition } from './parseDocument';

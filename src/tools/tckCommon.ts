@@ -4,16 +4,16 @@ import { SpawnSyncReturns, spawnSync } from 'child_process';
 import { tckPath } from '../constants';
 import { parseErrorPosition } from './parseDocument';
 
-export function handleTckTool(id: string, command: string, diagnosticCollection: vscode.DiagnosticCollection, tool: any) {
+export function handleTckTool(id: string, command: string, diagnosticCollection: vscode.DiagnosticCollection, tool: (output: SpawnSyncReturns<string>, diagnostic: vscode.DiagnosticCollection, file: string) => void) {
 	return vscode.commands.registerCommand(id, () => {
 		let currentFile = vscode.window.activeTextEditor?.document.fileName;
 		if (currentFile === undefined) {
-			currentFile = "";
+			currentFile = '';
 		}
 
 		diagnosticCollection.clear();
 
-		const output: SpawnSyncReturns<string> = spawnSync(tckPath + command + " " + currentFile, { shell: true, encoding: 'utf-8' });
+		const output: SpawnSyncReturns<string> = spawnSync(tckPath + command + ' ' + currentFile, { shell: true, encoding: 'utf-8' });
 
 		// handling errors
 		if (output.status !== 0) {
@@ -35,4 +35,12 @@ function handleErrorsOutput(output: SpawnSyncReturns<string>, diagnosticCollecti
 		// sending errors to VSCode
 		diagnosticCollection.set(vscode.Uri.parse(currentFile), errors);
 	}
+}
+
+export function displayStatusBar(tckCommand: string, name: string, priority: number) {
+	const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, priority);
+	statusBarItem.command = tckCommand;
+	statusBarItem.text = name;
+	statusBarItem.show();
+	return statusBarItem;
 }
