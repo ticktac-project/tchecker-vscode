@@ -11,9 +11,8 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Extension activated.');
 	const diagnosticCollection = vscode.languages.createDiagnosticCollection('errors');
 
-	// handle tck-syntax tool
 	const tckSyntax = handleTckSyntax(diagnosticCollection);
-	const tckReach = handleTckReach();
+	const tckReach = handleTckReach(diagnosticCollection);
 	const tckSimulate = handleTckSimulate(diagnosticCollection);
 
 	context.subscriptions.push(tckSyntax);
