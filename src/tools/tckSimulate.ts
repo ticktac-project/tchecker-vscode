@@ -7,14 +7,14 @@ import { tckPath } from '../constants';
 // gets tck-simulate tool from config
 const tckCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-simulate'));
 
-let nbOfSimulate : number = 0;
+let nbOfSimulate = 0;
 
-let isRunning : boolean = false;
-const runningErrorMessage : string = 'tck-simulate is already running... Please close the current execution (by using \'q\' in the input box).';
+let isRunning = false;
+const runningErrorMessage = 'tck-simulate is already running... Please close the current execution (by using \'q\' in the input box).';
 
 const tckSimulateStatusBar : vscode.StatusBarItem = displayStatusBar('tchecker-vscode.tckSimulate', 'Launch tck-simulate', 20);
 
-const tckSimulateInputBoxBar = displayStatusBar('tchecker-vscode.tckSimulateInput', 'Show input box (tck-simulate)', 10);
+const tckSimulateInputBoxBar : vscode.StatusBarItem = displayStatusBar('tchecker-vscode.tckSimulateInput', 'Show input box (tck-simulate)', 10);
 tckSimulateInputBoxBar.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
 tckSimulateInputBoxBar.hide();
 
@@ -73,8 +73,12 @@ function initializeOutputWindow(): vscode.OutputChannel {
 
 function isProcessEnded(resolve: ((value: unknown) => void), pid: number) {
 	if (isAlive(pid)) {
-		setTimeout(() => isProcessEnded(resolve, pid), 1000);
-	} else resolve('timeout');
+		setTimeout(() => {
+			isProcessEnded(resolve, pid)
+		}, 1000);
+	} else {
+		resolve('timeout')
+	}
 }
 
 function resolveReadline(pid: number) {
@@ -84,18 +88,20 @@ function resolveReadline(pid: number) {
 				tckSimulateInputBox.hide();
 				resolve(tckSimulateInputBox.value);
 			});
-			setTimeout(() => isProcessEnded(resolve, pid), 500);
+			setTimeout(() => {
+				isProcessEnded(resolve, pid)
+			}, 500);
 		}
 	);
 }
 
 async function readlineCall(simulation: ChildProcessWithoutNullStreams) {
 	let result : string | unknown = '';
-	while (true) {
+	while (isAlive(simulation.pid as number)) {
 		result = await resolveReadline(simulation.pid as number);
 		if (result === 'timeout') {
 			break
-		};
+		}
 		simulation.stdin.write(result + '\n');
 	}
 	closeRoutine();
@@ -103,7 +109,7 @@ async function readlineCall(simulation: ChildProcessWithoutNullStreams) {
 
 function isAlive(pid: number): boolean {
 	const x = spawnSync('ps -p ' + pid + ' | grep ' + pid, { shell: true, encoding: 'utf-8' });
-	return x.stdout.length !== 0;
+	return (x.stdout.length !== 0);
 }
 
 function closeRoutine() {
