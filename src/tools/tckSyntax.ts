@@ -1,14 +1,15 @@
 import * as vscode from 'vscode';
 import { SpawnSyncReturns } from 'child_process';
 
-import { handleTckTool } from './tckCommon';
+import { handleTckTool, displayStatusBar } from './tckCommon';
 import { parseErrorPosition } from './parseDocument';
 
 // gets tck-syntax tool from config
 const tckCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-syntax'));
 
 export function handleTckSyntax(diagnosticCollection: vscode.DiagnosticCollection) {
-	return handleTckTool('tchecker-vscode.tckSyntax', tckCommand as string, diagnosticCollection, handleTckSyntaxWarnings);
+	return [handleTckTool('tchecker-vscode.tckSyntax', tckCommand as string, diagnosticCollection, handleTckSyntaxWarnings),
+	displayStatusBar('tchecker-vscode.tckSyntax', 'Check Syntax', 40)];
 }
 
 function handleTckSyntaxWarnings(output: SpawnSyncReturns<string>, diagnosticCollection: vscode.DiagnosticCollection, currentFile: string) {

@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const tckReach = handleTckReach(diagnosticCollection);
 	const tckSimulate = handleTckSimulate(diagnosticCollection);
 
-	context.subscriptions.push(tckSyntax);
+	context.subscriptions.concat(tckSyntax);
 	context.subscriptions.concat(tckReach);
 	context.subscriptions.concat(tckSimulate);
 	context.subscriptions.concat(systemSignatureHelp());
