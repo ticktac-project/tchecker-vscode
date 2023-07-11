@@ -45,6 +45,11 @@
 					"default": "tck-syntax -c",
 					"description": "Specifies the command for performing syntax checking."
 				},
+				"tchecker-vscode.tck-reach": {
+					"type": "string",
+					"default": "tck-reach -a reach",
+					"description": "Specifies the command for using tck-reach tool."
+				},
 				"tchecker-vscode.tck-simulate": {
 					"type": "string",
 					"default": "tck-simulate -i",
@@ -58,8 +63,34 @@
 				"title": "TChecker: Syntax check"
 			},
 			{
+				"command": "tchecker-vscode.tckReach",
+				"title": "TChecker: tck-reach -a"
+			},
+			{
 				"command": "tchecker-vscode.tckSimulate",
 				"title": "TChecker: tck-simulate"
+			},
+			{
+				"command": "tchecker-vscode.tckSimulateInput",
+				"title": "TChecker: show input box (tck-simulate)"
+			}
+		],
+		"taskDefinitions": [
+			{
+				"type": "custombuildscript",
+				"required": [
+					"flavor"
+				],
+				"properties": {
+					"flavor": {
+						"type": "string",
+						"description": "The build flavor. Should be either '32' or '64'."
+					},
+					"flags": {
+						"type": "array",
+						"description": "Additional build flags."
+					}
+				}
 			}
 		]
 	},
