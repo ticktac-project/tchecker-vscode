@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { spawn, ChildProcessWithoutNullStreams, spawnSync } from 'child_process';
 
 import { displayStatusBar } from './tckCommon'; 
-import { tckPath } from '../constants';
+import { tckPath, tckSimulateStatusBarText } from '../constants';
 
 // gets tck-simulate tool from config
 const tckCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-simulate'));
@@ -12,7 +12,7 @@ let nbOfSimulate = 0;
 let isRunning = false;
 const runningErrorMessage = 'tck-simulate is already running... Please close the current execution (by using \'q\' in the input box).';
 
-const tckSimulateStatusBar : vscode.StatusBarItem = displayStatusBar('tchecker-vscode.tckSimulate', 'Launch tck-simulate', 20);
+const tckSimulateStatusBar : vscode.StatusBarItem = displayStatusBar('tchecker-vscode.tckSimulate', tckSimulateStatusBarText, 20);
 
 const tckSimulateInputBoxBar : vscode.StatusBarItem = displayStatusBar('tchecker-vscode.tckSimulateInput', 'Show input box (tck-simulate)', 10);
 tckSimulateInputBoxBar.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
@@ -24,24 +24,31 @@ tckSimulateInputBox.placeholder = 'Next state...';
 
 export function handleTckSimulate(diagnosticCollection: vscode.DiagnosticCollection) {
 	return [vscode.commands.registerCommand('tchecker-vscode.tckSimulate', () => {
-		let currentFile = vscode.window.activeTextEditor?.document.fileName;
-		if (currentFile === undefined) {
-			currentFile = '';
-		}
-
 		diagnosticCollection.clear();
-
+			
 		if (isRunning) {
 			vscode.window.showErrorMessage(runningErrorMessage);
 		} else {
 			isRunning = true;
 			nbOfSimulate++;
-			tckSimulate(currentFile);
+			tckSimulate();
 		}
 	}), tckSimulateStatusBar, showInputBoxCommand() ];
 }
 
-function tckSimulate(currentFile: string) {
+let currentEditor : vscode.TextEditor = vscode.window.activeTextEditor as vscode.TextEditor;
+vscode.window.onDidChangeActiveTextEditor((editor: vscode.TextEditor | undefined) => {
+	if (editor && editor.document.uri.scheme === 'file') {
+		currentEditor = editor;
+	}
+});
+
+function tckSimulate() {
+	const currentFile = currentEditor.document.uri.fsPath;
+	if (currentFile === '') {
+		isRunning = false;
+		return;
+	}
 	tckSimulateStatusBar.hide() // hiding tck-simulate launch button
 	tckSimulateInputBoxBar.show();
 	const outputWindow = initializeOutputWindow();

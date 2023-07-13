@@ -45,11 +45,6 @@
 					"default": "tck-syntax -c",
 					"description": "Specifies the command for performing syntax checking."
 				},
-				"tchecker-vscode.tck-reach": {
-					"type": "string",
-					"default": "tck-reach -a reach",
-					"description": "Specifies the command for using tck-reach tool."
-				},
 				"tchecker-vscode.tck-simulate": {
 					"type": "string",
 					"default": "tck-simulate -i",
@@ -61,10 +56,6 @@
 			{
 				"command": "tchecker-vscode.tckSyntax",
 				"title": "TChecker: Syntax check"
-			},
-			{
-				"command": "tchecker-vscode.tckReach",
-				"title": "TChecker: tck-reach -a"
 			},
 			{
 				"command": "tchecker-vscode.tckSimulate",

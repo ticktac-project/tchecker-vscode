@@ -11,6 +11,11 @@ export type Keyword = {
 // gets the TChecker build path from config
 export const tckPath : string | undefined = vscode.workspace.getConfiguration('tchecker-vscode').get('path');
 
+// status bar text
+export const tckSyntaxStatusBarText = 'Check Syntax';
+export const tckReachLivenessStatusBarText = 'Model Checking';
+export const tckSimulateStatusBarText = 'Interactive Simulation';
+
 export const keywords : Keyword[] = [
 	{
 		name: 'system',
