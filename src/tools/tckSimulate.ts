@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { spawn, ChildProcessWithoutNullStreams, spawnSync } from 'child_process';
 
 import { displayStatusBar } from './tckCommon'; 
-import { tckPath } from '../constants';
+import { tckPath, tckSimulateStatusBarText } from '../constants';
 
 // gets tck-simulate tool from config
 const tckCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-simulate'));
@@ -12,7 +12,7 @@ let nbOfSimulate = 0;
 let isRunning = false;
 const runningErrorMessage = 'tck-simulate is already running... Please close the current execution (by using \'q\' in the input box).';
 
-const tckSimulateStatusBar : vscode.StatusBarItem = displayStatusBar('tchecker-vscode.tckSimulate', 'Interactive Simulation', 20);
+const tckSimulateStatusBar : vscode.StatusBarItem = displayStatusBar('tchecker-vscode.tckSimulate', tckSimulateStatusBarText, 20);
 
 const tckSimulateInputBoxBar : vscode.StatusBarItem = displayStatusBar('tchecker-vscode.tckSimulateInput', 'Show input box (tck-simulate)', 10);
 tckSimulateInputBoxBar.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');

@@ -1,5 +1,6 @@
-import { displayStatusBar } from './tckCommon'; 
+import { displayStatusBar } from './tckCommon';
+import { tckReachLivenessStatusBarText } from '../constants';
 
 export function handleTckReachLiveness() {
-	return [ displayStatusBar('workbench.action.tasks.runTask', 'Model Checking', 30)];
+	return [ displayStatusBar('workbench.action.tasks.runTask', tckReachLivenessStatusBarText, 30)];
 }
