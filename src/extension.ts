@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
 import { handleTckSyntax } from './tools/tckSyntax'
-import { handleTckReach } from './tools/tckReach';
+import { handleTckReachLiveness } from './tools/tckReachLiveness';
 import { handleTckSimulate } from './tools/tckSimulate';
 import { handleAutoCompletion } from './tools/autoCompletion';
 import { systemSignatureHelp } from './tools/signatureHelp';
@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const diagnosticCollection = vscode.languages.createDiagnosticCollection('errors');
 
 	const tckSyntax = handleTckSyntax(diagnosticCollection);
-	const tckReach = handleTckReach(diagnosticCollection);
+	const tckReach = handleTckReachLiveness();
 	const tckSimulate = handleTckSimulate(diagnosticCollection);
 
 	context.subscriptions.concat(tckSyntax);

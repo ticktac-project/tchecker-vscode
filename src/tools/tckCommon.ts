@@ -4,11 +4,19 @@ import { SpawnSyncReturns, spawnSync } from 'child_process';
 import { tckPath } from '../constants';
 import { parseErrorPosition } from './parseDocument';
 
+let currentEditor : vscode.TextEditor = vscode.window.activeTextEditor as vscode.TextEditor;
+vscode.window.onDidChangeActiveTextEditor((editor: vscode.TextEditor | undefined) => {
+	if (editor && editor.document.uri.scheme === 'file') {
+		currentEditor = editor;
+	}
+});
+
 export function handleTckTool(id: string, command: string, diagnosticCollection: vscode.DiagnosticCollection, tool: (output: SpawnSyncReturns<string>, diagnostic: vscode.DiagnosticCollection, file: string) => void) {
 	return vscode.commands.registerCommand(id, () => {
-		let currentFile = vscode.window.activeTextEditor?.document.fileName;
-		if (currentFile === undefined) {
-			currentFile = '';
+		const currentFile = currentEditor.document.uri.fsPath;
+		console.log(currentFile);
+		if (currentFile === '') {
+			return;
 		}
 
 		diagnosticCollection.clear();
