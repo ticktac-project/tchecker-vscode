@@ -7,6 +7,13 @@ import { handleAutoCompletion } from './tools/autoCompletion';
 import { systemSignatureHelp } from './tools/signatureHelp';
 import { handleHover } from './tools/hover';
 
+export let currentEditor : vscode.TextEditor = vscode.window.activeTextEditor as vscode.TextEditor;
+vscode.window.onDidChangeActiveTextEditor((editor: vscode.TextEditor | undefined) => {
+	if (editor && editor.document.uri.scheme === 'file') {
+		currentEditor = editor;
+	}
+});
+
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Extension activated.');
 	const diagnosticCollection = vscode.languages.createDiagnosticCollection('errors');

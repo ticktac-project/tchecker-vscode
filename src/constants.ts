@@ -11,10 +11,21 @@ export type Keyword = {
 // gets the TChecker build path from config
 export const tckPath : string | undefined = vscode.workspace.getConfiguration('tchecker-vscode').get('path');
 
+// gets TChecker commands from config
+export const tckSyntaxCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-syntax'));
+
 // status bar text
 export const tckSyntaxStatusBarText = 'Check Syntax';
 export const tckReachLivenessStatusBarText = 'Model Checking';
 export const tckSimulateStatusBarText = 'Interactive Simulation';
+
+// utils
+export const getCurrentFileErrorMessage = 'Failed to recognise the input file. Please run the command with a tck file open.';
+
+// tck-syntax
+export const tckSyntaxErrorMessage = 'An error has occurred. Please check the \'Problems\' panel for more details.';
+export const tckSyntaxWarningMessage = 'Syntax OK. Warning(s) detected, please check the \'Problems\' panel for more details.';
+export const tckSyntaxCorrectMessage = 'Syntax OK.';
 
 export const keywords : Keyword[] = [
 	{
