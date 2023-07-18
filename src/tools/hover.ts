@@ -1,7 +1,18 @@
-import * as vscode from 'vscode';
+/**	
+ * This module provides the VSC hover feature.
+ * 
+ * All informations are provided by constants.ts.
+ */
 
+import * as vscode from 'vscode';
 import { Keyword, keywords } from '../constants';
 
+/**
+ * Yields information about TChecker's keywords by hovering it.
+ * 
+ * @param keyword TChecker keyword
+ * @returns A disposable
+ */
 export function triggerHover(keyword: Keyword) {
 	return vscode.languages.registerHoverProvider('tchecker', {
 		provideHover(document: vscode.TextDocument, position: vscode.Position) {
@@ -17,6 +28,12 @@ export function triggerHover(keyword: Keyword) {
 	});
 }
 
+
+/**
+ * Registers all TChecker's keywords.
+ * 
+ * @returns A disposable
+ */
 export function handleHover() {
 	return keywords.map((e) => triggerHover(e));
 }
