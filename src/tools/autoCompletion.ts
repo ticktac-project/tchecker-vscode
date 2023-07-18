@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 
 import { keywords } from '../constants';
 import { getVarAbove } from './parseDocument';
-import { countCar } from '../utils';
+import { countChar } from '../utils';
 
 function completeItem(item: string) {
 	const itemToComplete = new vscode.CompletionItem(item);
@@ -14,8 +14,8 @@ function handleKeywords() {
 	return vscode.languages.registerCompletionItemProvider('tchecker', {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 			const line = document.lineAt(position).text.substring(0, position.character);
-			const nbOfColon = countCar(line,':');
-			const nbOfOpenBracket = countCar(line,'{');
+			const nbOfColon = countChar(line,':');
+			const nbOfOpenBracket = countChar(line,'{');
 
 			if (nbOfColon > 0 || nbOfOpenBracket > 0) {
 				return undefined;
@@ -28,8 +28,8 @@ function handleKeywords() {
 
 function handleAutoCompletionWithConstraint(document: vscode.TextDocument, position: vscode.Position, keyword: string, variables: string[], startingColon: number, isRetriggerable: boolean, others: boolean) {
 	const line = document.lineAt(position).text.substring(0, position.character);
-	const nbOfColon = countCar(line,':');
-	const nbOfOpenBracket = countCar(line,'{');
+	const nbOfColon = countChar(line,':');
+	const nbOfOpenBracket = countChar(line,'{');
 	const retriggerOption = ((isRetriggerable) ? (nbOfColon === 0) : (nbOfColon !== startingColon));
 	if (!line.startsWith(keyword + ':') || nbOfOpenBracket !== 0 || retriggerOption || others) {
 		return undefined;
@@ -95,8 +95,8 @@ function handleSync() {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				const line = document.lineAt(position).text;
-				const nbOfColon = countCar(line,':');
-				const nbOfAt = countCar(line,'@');
+				const nbOfColon = countChar(line,':');
+				const nbOfAt = countChar(line,'@');
 				const atNeqColon = (nbOfColon !== nbOfAt + 1);
 				
 				const processId = getVarAbove(document, 'process', 1, '');
@@ -108,8 +108,8 @@ function handleSync() {
 		return vscode.languages.registerCompletionItemProvider('tchecker', {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				const line = document.lineAt(position).text;
-				const nbOfColon = countCar(line,':');
-				const nbOfAt = countCar(line,'@');
+				const nbOfColon = countChar(line,':');
+				const nbOfAt = countChar(line,'@');
 				const atNeqColon = (nbOfColon !== nbOfAt);
 
 				const targettedProcess = line.split(':')[nbOfColon].split('@')[0];

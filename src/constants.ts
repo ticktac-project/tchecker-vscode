@@ -13,11 +13,13 @@ export const tckPath : string | undefined = vscode.workspace.getConfiguration('t
 
 // gets TChecker commands from config
 export const tckSyntaxCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-syntax'));
+export const tckSimulateCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-simulate'));
 
 // status bar text
 export const tckSyntaxStatusBarText = 'Check Syntax';
 export const tckReachLivenessStatusBarText = 'Model Checking';
 export const tckSimulateStatusBarText = 'Interactive Simulation';
+export const tckSimulateStatusBarTriggerText = 'Show input box (tck-simulate)';
 
 // utils
 export const getCurrentFileErrorMessage = 'Failed to recognise the input file. Please run the command with a tck file open.';
@@ -26,6 +28,12 @@ export const getCurrentFileErrorMessage = 'Failed to recognise the input file. P
 export const tckSyntaxErrorMessage = 'An error has occurred. Please check the \'Problems\' panel for more details.';
 export const tckSyntaxWarningMessage = 'Syntax OK. Warning(s) detected, please check the \'Problems\' panel for more details.';
 export const tckSyntaxCorrectMessage = 'Syntax OK.';
+
+// tck-simulate
+export const tckSimulateRunningErrorMessage = 'tck-simulate is already running... Please close the current execution (by using \'q\' in the input box).';
+export const tckSimulateInputBoxTitle = 'tck-simulate';
+export const tckSimulateInputBoxPlaceholder = 'Next state...';
+export const tckSimulateOutputWindowExecutionMessage = 'Executing tck-simulate...';
 
 export const keywords : Keyword[] = [
 	{

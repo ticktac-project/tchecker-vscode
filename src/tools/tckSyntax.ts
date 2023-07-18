@@ -1,7 +1,7 @@
 /**
  * This module integrates the 'tck-syntax' tool in the extension.
  * 
- * handleTckSyntax registers a VSC command that allow the user to run a syntax
+ * handleTckSyntax registers a VSC command that allows the user to run a syntax
  * check. Depending on the output, it calls a function that alert the user
  * 
  * This module relies on:
@@ -9,15 +9,15 @@
  *   - parseDocument.ts in order to get the position of potential syntax errors;
  *   - extention.ts in order to get the current editor;
  *   - utils.ts in order to get the input file path based on the current editor;
- *   - constants.ts in order to get all needed constants;
+ *   - constants.ts in order to get all needed constants.
  * 
- * All customizable displayed text can be founded in constants.ts
+ * All customizable displayed text can be founded in constants.ts.
  */
 
 import * as vscode from 'vscode';
 import { SpawnSyncReturns, spawnSync } from 'child_process';
 
-import { displayStatusBar } from './tckCommon';
+import { displayStatusBarItem } from './tckCommon';
 import { parseErrorPosition } from './parseDocument';
 import { getCurrentFile } from '../utils';
 import { currentEditor } from '../extension';
@@ -33,7 +33,8 @@ import { tckPath, tckSyntaxCommand, tckSyntaxCorrectMessage, tckSyntaxErrorMessa
  * file before using registerCommand (in this case: tchecker-vscode.tckSyntax).
  * 
  * @param diagnosticCollection Container of all diagnostics (errors and warnings)
- * @returns An array of a disposable (the registered command) and a VSC status bar
+ * @returns An array of a disposable (the registered command) and a VSC status
+ * bar item
  */
 export function handleTckSyntax(diagnosticCollection: vscode.DiagnosticCollection) {
 	return [
@@ -54,7 +55,7 @@ export function handleTckSyntax(diagnosticCollection: vscode.DiagnosticCollectio
 				handleCorrectSyntax(output, diagnosticCollection, currentFile);
 			}
 		}),
-		displayStatusBar('tchecker-vscode.tckSyntax', tckSyntaxStatusBarText, 40)
+		displayStatusBarItem('tchecker-vscode.tckSyntax', tckSyntaxStatusBarText, 40)
 	];
 }
 

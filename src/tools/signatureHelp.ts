@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
 import { Keyword, keywords } from '../constants';
-import { countCar } from '../utils';
+import { countChar } from '../utils';
 
 function triggerSignatureHelp(keyword: Keyword) {
 	return vscode.languages.registerSignatureHelpProvider('tchecker', {
@@ -9,8 +9,8 @@ function triggerSignatureHelp(keyword: Keyword) {
 
 			const linePrefix = document.lineAt(position).text.substring(0, position.character);
 
-			const nbOfColon = countCar(linePrefix,':');
-			const nbOfOpenBracket = countCar(linePrefix,'{');
+			const nbOfColon = countChar(linePrefix,':');
+			const nbOfOpenBracket = countChar(linePrefix,'{');
 
 			if (!linePrefix.startsWith(keyword.name + ':') || (nbOfColon > keyword.attributePos) || (nbOfOpenBracket > 1) || (nbOfOpenBracket == 1 && nbOfColon < keyword.attributePos)) {
 				return undefined;
