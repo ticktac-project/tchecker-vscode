@@ -3,7 +3,7 @@
 	"displayName": "TChecker VSCode",
 	"description": "Visual Studio Code extension for TChecker",
 	"version": "0.0.1",
-	"publisher": "TickTac Project",
+	"publisher": "ticktac-project",
 	"icon": "logo.png",
 	"engines": {
 		"vscode": "^1.78.0"
@@ -64,24 +64,6 @@
 			{
 				"command": "tchecker-vscode.tckSimulateInput",
 				"title": "TChecker: show input box (tck-simulate)"
-			}
-		],
-		"taskDefinitions": [
-			{
-				"type": "custombuildscript",
-				"required": [
-					"flavor"
-				],
-				"properties": {
-					"flavor": {
-						"type": "string",
-						"description": "The build flavor. Should be either '32' or '64'."
-					},
-					"flags": {
-						"type": "array",
-						"description": "Additional build flags."
-					}
-				}
 			}
 		]
 	},

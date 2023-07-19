@@ -1,5 +1,12 @@
+/**
+ * This module provides all customizable displayed text and constants. 
+ */
+
 import * as vscode from 'vscode';
 
+/**
+ * TChecker keywords custom types.
+ */
 export type Keyword = {
 	name: string,
 	signature: string,
@@ -8,14 +15,37 @@ export type Keyword = {
 	attributePos: number
 }
 
-// gets the TChecker build path from config
+// gets TChecker build path from config
 export const tckPath : string | undefined = vscode.workspace.getConfiguration('tchecker-vscode').get('path');
 
-// status bar text
-export const tckSyntaxStatusBarText = 'Check Syntax';
-export const tckReachLivenessStatusBarText = 'Model Checking';
-export const tckSimulateStatusBarText = 'Interactive Simulation';
+// gets TChecker commands from config
+export const tckSyntaxCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-syntax'));
+export const tckSimulateCommand : string | undefined = (vscode.workspace.getConfiguration('tchecker-vscode').get('tck-simulate'));
 
+// utils
+export const getCurrentFileErrorMessage = 'Failed to recognise the input file. Please run the command with a tck file open.';
+
+// tck-syntax
+export const tckSyntaxErrorMessage = 'An error has occurred. Please check the \'Problems\' panel for more details.';
+export const tckSyntaxWarningMessage = 'Syntax OK. Warning(s) detected, please check the \'Problems\' panel for more details.';
+export const tckSyntaxCorrectMessage = 'Syntax OK.';
+export const tckSyntaxStatusBarText = 'Check Syntax';
+
+// tck-simulate
+export const tckSimulateRunningErrorMessage = 'tck-simulate is already running... Please close the current execution (by using \'q\' in the input box).';
+export const tckSimulateInputBoxTitle = 'tck-simulate';
+export const tckSimulateInputBoxPlaceholder = 'Next state...';
+export const tckSimulateOutputWindowExecutionMessage = 'Executing tck-simulate...';
+export const tckSimulateStatusBarText = 'Interactive Simulation';
+export const tckSimulateStatusBarTriggerText = 'Show input box (tck-simulate)';
+
+// tck-reach and tck-liveness
+export const tckReachLivenessStatusBarText = 'Model Checking';
+
+
+/**
+ * An array of all documented TChecker keywords.
+ */
 export const keywords : Keyword[] = [
 	{
 		name: 'system',
