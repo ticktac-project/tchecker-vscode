@@ -10,9 +10,11 @@
  * All customizable displayed text can be founded in constants.ts.
  */
 
-import { displayStatusBarItem } from './tckCommon';
+import { createTckStatusBarItem } from './tckCommon';
 import { tckReachLivenessStatusBarText } from '../constants';
 
+// creates tck-reach / tck-liveness status bar
+export const tckReachLivenessStatusBar = createTckStatusBarItem('workbench.action.tasks.runTask', tckReachLivenessStatusBarText, 30);
 
 /**
  * Creates a status bar item that triggers the task selector.
@@ -21,6 +23,6 @@ import { tckReachLivenessStatusBarText } from '../constants';
  */
 export function handleTckReachLiveness() {
 	return [
-		displayStatusBarItem('workbench.action.tasks.runTask', tckReachLivenessStatusBarText, 30)
+		tckReachLivenessStatusBar
 	];
 }
