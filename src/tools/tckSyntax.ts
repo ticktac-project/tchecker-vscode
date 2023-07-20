@@ -74,7 +74,7 @@ function handleSyntaxErrors(output: SpawnSyncReturns<string>, diagnosticCollecti
 	vscode.window.showErrorMessage(tckSyntaxErrorMessage);
 	
 	// getting errors
-	const errors = parseErrorPosition(output, 0);
+	const errors = parseErrorPosition(output, vscode.DiagnosticSeverity.Error);
 
 	// sending errors to VSCode
 	diagnosticCollection.set(vscode.Uri.parse(currentFile), errors);
@@ -93,7 +93,7 @@ function handleCorrectSyntax(output: SpawnSyncReturns<string>, diagnosticCollect
 		vscode.window.showInformationMessage(tckSyntaxWarningMessage);
 
 		// getting warnings
-		const warnings = parseErrorPosition(output, 1);
+		const warnings = parseErrorPosition(output, vscode.DiagnosticSeverity.Warning);
 
 		// sending warnings to VSCode
 		diagnosticCollection.set(vscode.Uri.parse(currentFile), warnings);
