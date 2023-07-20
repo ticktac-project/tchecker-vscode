@@ -28,7 +28,7 @@
 import * as vscode from 'vscode';
 import { spawn, ChildProcessWithoutNullStreams, spawnSync } from 'child_process';
 
-import { displayStatusBarItem } from './tckCommon'; 
+import { createTckStatusBarItem } from './tckCommon'; 
 import { getCurrentFile } from '../utils';
 import { currentEditor } from '../extension';
 import { tckPath, tckSimulateStatusBarText, tckSimulateCommand, tckSimulateRunningErrorMessage, tckSimulateStatusBarTriggerText, tckSimulateInputBoxPlaceholder, tckSimulateInputBoxTitle, tckSimulateOutputWindowExecutionMessage } from '../constants';
@@ -38,7 +38,7 @@ let nbOfSimulations = 0;
 let isRunning = false;
 
 // initialization of status bars & input box
-const tckSimulateStatusBar : vscode.StatusBarItem = initStatusBar();
+export const tckSimulateStatusBar : vscode.StatusBarItem = initStatusBar();
 const tckSimulateInputBoxBar : vscode.StatusBarItem = initInputBoxBar();
 const tckSimulateInputBox : vscode.InputBox = initInputBox();
 
@@ -240,7 +240,7 @@ function showInputBox() {
  * @returns A status bar item
  */
 function initStatusBar() {
-	return displayStatusBarItem('tchecker-vscode.tckSimulate', tckSimulateStatusBarText, 20);
+	return createTckStatusBarItem('tchecker-vscode.tckSimulate', tckSimulateStatusBarText, 20);
 }
 
 
@@ -250,7 +250,7 @@ function initStatusBar() {
  * @returns A status bar item
  */
 function initInputBoxBar() {
-	const inputBoxBar = displayStatusBarItem('tchecker-vscode.tckSimulateInput', tckSimulateStatusBarTriggerText, 10);
+	const inputBoxBar = createTckStatusBarItem('tchecker-vscode.tckSimulateInput', tckSimulateStatusBarTriggerText, 10);
 	inputBoxBar.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
 	inputBoxBar.hide();
 	return inputBoxBar;

@@ -17,11 +17,14 @@
 import * as vscode from 'vscode';
 import { SpawnSyncReturns, spawnSync } from 'child_process';
 
-import { displayStatusBarItem } from './tckCommon';
+import { createTckStatusBarItem } from './tckCommon';
 import { parseErrorPosition } from './parseDocument';
 import { getCurrentFile } from '../utils';
 import { currentEditor } from '../extension';
 import { tckPath, tckSyntaxCommand, tckSyntaxCorrectMessage, tckSyntaxErrorMessage, tckSyntaxStatusBarText, tckSyntaxWarningMessage } from '../constants';
+
+// creates tck-syntax status bar
+export const tckSyntaxStatusBar = createTckStatusBarItem('tchecker-vscode.tckSyntax', tckSyntaxStatusBarText, 40);
 
 
 /**
@@ -55,7 +58,7 @@ export function handleTckSyntax(diagnosticCollection: vscode.DiagnosticCollectio
 				handleCorrectSyntax(output, diagnosticCollection, currentFile);
 			}
 		}),
-		displayStatusBarItem('tchecker-vscode.tckSyntax', tckSyntaxStatusBarText, 40)
+		tckSyntaxStatusBar
 	];
 }
 
