@@ -47,9 +47,3 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.concat(handleHover());
 	context.subscriptions.concat(handleAutoCompletion());
 }
-
-export function deactivate(context: vscode.ExtensionContext) {
-	console.log('Deactivation...');
-	console.log(context.subscriptions);
-	return undefined;
-}
