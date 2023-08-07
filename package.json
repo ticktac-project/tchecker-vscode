@@ -4,6 +4,10 @@
 	"description": "Visual Studio Code extension for TChecker",
 	"version": "0.0.1",
 	"publisher": "ticktac-project",
+	"repository": {
+		"type": "git",
+		"url" : "https://github.com/ticktac-project/tchecker-vscode"
+	},
 	"icon": "logo.png",
 	"engines": {
 		"vscode": "^1.78.0"
