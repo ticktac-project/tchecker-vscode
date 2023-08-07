@@ -2,44 +2,44 @@
 
 - Visual Studio Code  (>= 1.78)
 - Node.js (>= 14.17)
+- TChecker (>= v0.6)
 
-# Installing TChecker-VSCode
+# How to install TChecker VS Code extension
 
-## Clone the repository:
+## Install an official release
 
+The easiest way to install TChecker VS Code extension is to download and install an official release from the [GitHub release page](https://github.com/ticktac-project/tchecker-vscode/releases).
+
+One the release `.vsix` file has been downloaded, then, simply run the command `code --install-extension tchecker-vscode-0.1.0.vsix` to install the extension(replacing `tchecker-vscode-0.1.0.vsix` with actual name of the downloaded file).
+
+Please, read the instructions on how to configure the extension below.
+
+## Installation from the source code
+
+- first, clone the repository:
 ```
 git clone https://github.com/ticktac-project/tchecker-vscode.git
 ```
-This will create a directory tchecker-vscode in the current directory, which will contain the entire extension.
+This will create a directory `tchecker-vscode` in the current directory, which will contain the entire extension.
 
-## Install all necessary npm modules:
-
-Run in the cloned folder:
+- then, install all necessary npm modules running the command below inside directory `tchecker-vscode`.
 ```
 npm install
 ```
-This installs all necessary npm modules in both the client and server folder.
 
-## Compile the client and the server:
-
+- next, compile the source code (again, within directory `tchecker-vscode`):
 ```
 npm run compile
 ```
-This compiles the client and server.
 
-## Open VS Code and run in the Command Palette:
-
-```
-Developer: Install Extension from Location
-```
-
-Then select the cloned repository.
+- finally, manually install the extension with `Developer: Install Extension from Location` from the Command Palette of VS Code, selecting the cloned repository `tchecker-vscode`.
 
 # Configure the extension
 
-## Detail the TChecker path
+From the activity bar, select `Extensions`. Then, from the contextual menu of the `TChecker VSCode` extension, choose `Extension Settings`.
 
-In order to use TChecker tools, it is essential to:
-- go in VS Code ```Settings```
-- search for ```TChecker```
-- put the build path in the ```Path``` box (.../build/src/)
+This extension requires access to [TChecker](https://github.com/ticktac-project/tchecker) tools. Set `Path` to a directory containing TChecker tools `tck-syntax`, `tck-reach`, `tck-liveness` and `tck-simulate`.
+
+Then, requirement `Tck-simulate` allows to define the command that is used to launch the simulation. Run `tck-simulate -h` from a terminal to see available options. The default value `tck-simulate -i` runs the interactive simulation (which is likely what you want).
+
+Finally, the last option `Tck-syntax` permits to define the command used for syntax checking. Running `tck-synax -h` from a terminal will list all the available options. The default command `tck-syntax -c` runs syntax verification (which is what is expected).
