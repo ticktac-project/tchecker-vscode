@@ -8,9 +8,7 @@
 
 ## Install an official release
 
-The easiest way to install TChecker VS Code extension is to download and install an official release from the [GitHub release page](https://github.com/ticktac-project/tchecker-vscode/releases).
-
-One the release `.vsix` file has been downloaded, then, simply run the command `code --install-extension tchecker-vscode-0.1.0.vsix` to install the extension(replacing `tchecker-vscode-0.1.0.vsix` with actual name of the downloaded file).
+The easiest way to install TChecker VS Code extension is to download and install an official release from the [GitHub release page](https://github.com/ticktac-project/tchecker-vscode/releases). Download one of the release `.vsix` file (the most recent is probably the best choice), then install the extension running the command `code --install-extension tchecker-vscode-0.1.0.vsix` from a terminal (replacing `tchecker-vscode-0.1.0.vsix` with actual name of the downloaded file).
 
 Please, read the instructions on how to configure the extension below.
 
